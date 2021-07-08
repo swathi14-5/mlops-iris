@@ -1,8 +1,10 @@
+from datetime import datetime
 import uvicorn
 from fastapi import FastAPI
 from pydantic import BaseModel
 from ml_utils import load_model, predict, retrain
 from typing import List
+from datetime import datetime
 
 # defining the main app
 app = FastAPI(title="Iris Predictor", docs_url="/")
@@ -35,7 +37,17 @@ class FeedbackIn(BaseModel):
 @app.get("/ping")
 # Healthcheck route to ensure that the API is up and running
 def ping():
-    return {"ping": "pong"}
+    return {"ping": "pong","timestamp":datetime.now()}
+# added get request from test case1   
+@app.get("/hi")
+# Healthcheck route to ensure that the API is up and running
+def hi():
+    return {"hi": "ML OPS-iris-test case 1","timestamp":datetime.now()}
+# added get request from test case2
+@app.get("/hello")
+# Healthcheck route to ensure that the API is up and running
+def hello():
+    return {"hello": "ML OPS-iris-test case2","timestamp":datetime.now()}
 
 
 @app.post("/predict_flower", response_model=QueryOut, status_code=200)
