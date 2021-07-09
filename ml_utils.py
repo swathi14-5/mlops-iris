@@ -47,9 +47,9 @@ def predict(query_data):
 
     #predicitng the best model
     if prediction>prediction1:
-        return("The best model is",prediction)
+        return(classes[prediction])
     else:
-        return("The best model is",prediction1)
+        return(classes[prediction1])
 
 # function to retrain the model as part of the feedback loop
 def retrain(data):

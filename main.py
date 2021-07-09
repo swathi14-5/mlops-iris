@@ -24,6 +24,7 @@ class QueryIn(BaseModel):
 # class which is returned in the response
 class QueryOut(BaseModel):
     flower_class: str
+    timestamp:str
 
 # class which is expected in the payload while re-training
 class FeedbackIn(BaseModel):
@@ -37,17 +38,17 @@ class FeedbackIn(BaseModel):
 @app.get("/ping")
 # Healthcheck route to ensure that the API is up and running
 def ping():
-    return {"ping": "pong","timestamp":datetime.now()}
+    return {"ping": "pong","timestamp":datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}
 # added get request from test case1   
 @app.get("/hi")
 # Healthcheck route to ensure that the API is up and running
 def hi():
-    return {"hi": "ML OPS-iris-test case 1","timestamp":datetime.now()}
+    return {"hi": "ML OPS-iris-test case 1","timestamp":datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}
 # added get request from test case2
 @app.get("/hello")
 # Healthcheck route to ensure that the API is up and running
 def hello():
-    return {"hello": "ML OPS-iris-test case2","timestamp":datetime.now()}
+    return {"hello": "ML OPS-iris-test case2","timestamp":datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}
 
 
 @app.post("/predict_flower", response_model=QueryOut, status_code=200)
@@ -55,7 +56,7 @@ def hello():
 # Payload: QueryIn containing the parameters
 # Response: QueryOut containing the flower_class predicted (200)
 def predict_flower(query_data: QueryIn):
-    output = {"flower_class": predict(query_data)}
+    output = {"flower_class": predict(query_data),"timestamp":datetime.now().strftime("%m/%d/%Y, %H:%M:%S")}
     return output
 
 @app.post("/feedback_loop", status_code=200)
